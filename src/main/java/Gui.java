@@ -23,6 +23,11 @@ public class Gui extends JFrame {
     JPanel suggestionPanel;
     JScrollPane scroll;
     JButton explore;
+    //custom url
+    JPanel customized;
+    JLabel customizedLabel;
+    JTextField customizedInput;
+    JButton exploreCustomButton;
     JList<String> suggestionList;
     public static Connection conn;
     public Gui() throws SQLException, IOException {
@@ -35,23 +40,32 @@ public class Gui extends JFrame {
         setVisible(true);
     }
     public void initializer(){
+        Dimension fieldDimension = new Dimension(200,25);
+
         mainPanel = new JPanel();
         model = new DefaultListModel<String>();
         list = new JList<>();
-
+        customized = new JPanel();
+        customizedInput = new JTextField();
+        customizedInput.setPreferredSize(fieldDimension);
+        customizedLabel = new JLabel("enter your customized url");
         suggestionPanel = new JPanel();
+        customized.add(customizedLabel);
+        customized.add(customizedInput);
+        exploreCustomButton = new JButton("explore custom url2é");
+        customized.add(exploreCustomButton);
         scroll =  new JScrollPane(list);
         suggestionPanel.add(scroll);
         explore = new JButton("explore");
         listenerInitializer();
         search = new JLabel("search");
-        Dimension fieldDimension = new Dimension(200,25);
         fieldOfSearch = new JTextField();
         fieldOfSearch.setPreferredSize(fieldDimension);
         mainPanel.add(search);
 
         mainPanel.add(fieldOfSearch);
         mainPanel.add(suggestionPanel);
+        mainPanel.add(customized);
     }
 
     public void openExploreWindow(String url) throws IOException {
@@ -70,7 +84,19 @@ public class Gui extends JFrame {
                 }
             }
         });
+        exploreCustomButton.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    openExploreWindow(customizedInput.getText());
+                }catch(IOException ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
+
     public Connection createSqlConnection() throws SQLException {
         String url = "jdbc:sqlite:database2.db";
         try {

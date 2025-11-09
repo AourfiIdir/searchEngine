@@ -8,5 +8,9 @@ public class Main {
 }
 
 
-//to doZ
+//to do
+//make an input to let the user select his own url
+//make the reuslt ina  file created by the program
+
+
 

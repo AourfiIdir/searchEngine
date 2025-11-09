@@ -17,8 +17,8 @@ public class ExploreGui extends JFrame {
     JPanel mainPanel;
     public ExploreGui(String url){
         this.url = url;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("explore");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setTitle(url);
         setSize(500,500);
         initializer();
         initializeListeners();
