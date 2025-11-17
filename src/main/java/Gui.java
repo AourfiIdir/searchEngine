@@ -8,12 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URL;
+
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Gui extends JFrame {
     Map<String,String> result;
+    JPanel firstPanel;
     Statement insertStatement;
     JPanel mainPanel;
     JLabel search;
@@ -42,7 +44,8 @@ public class Gui extends JFrame {
     public void initializer(){
         Dimension fieldDimension = new Dimension(200,25);
 
-        mainPanel = new JPanel();
+        mainPanel = new JPanel(new BorderLayout());
+        firstPanel = new JPanel();
         model = new DefaultListModel<String>();
         list = new JList<>();
         customized = new JPanel();
@@ -61,11 +64,12 @@ public class Gui extends JFrame {
         search = new JLabel("search");
         fieldOfSearch = new JTextField();
         fieldOfSearch.setPreferredSize(fieldDimension);
-        mainPanel.add(search);
 
-        mainPanel.add(fieldOfSearch);
-        mainPanel.add(suggestionPanel);
-        mainPanel.add(customized);
+        firstPanel.add(search);
+        firstPanel.add(fieldOfSearch);
+        firstPanel.add(suggestionPanel);
+        mainPanel.add(firstPanel,BorderLayout.NORTH);
+        mainPanel.add(customized,BorderLayout.SOUTH);
     }
 
     public void openExploreWindow(String url) throws IOException {
@@ -238,7 +242,7 @@ String sqlInsert = "INSERT OR IGNORE INTO ipess (id,ip,title) VALUES " +
                 }
                 //make the table clickable for any
                 updatePanel(model);
-
+                
             }
         });
     }

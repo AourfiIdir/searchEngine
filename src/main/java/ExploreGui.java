@@ -6,6 +6,8 @@ import org.jsoup.select.Elements;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class ExploreGui extends JFrame {
@@ -27,32 +29,42 @@ public class ExploreGui extends JFrame {
     }
     public void loadHtml(String url,String source) throws IOException {
         Document doc = Jsoup.connect(url).get();
+        BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/result.txt"));
+        StringBuilder str=new StringBuilder();
+
         switch(source){
             case "loadHtml":
                 String HtmlPage = doc.outerHtml();
-                System.out.println(HtmlPage);
+                writer.write(HtmlPage);
                 break;
             case "loadH1":
                 Elements H1 = doc.select("h1");
                 for(Element h1 :H1){
-                    System.out.println(h1.text());
+                    str.append(h1.text());
+                    str.append(System.lineSeparator());
                 }
+                writer.write(str.toString());
                 break;
             case "loadH2":
                 Elements H2 = doc.select("h2");
                 for(Element h2 :H2){
-                    System.out.println(h2.text());
+                    str.append(h2.text());
+                    str.append(System.lineSeparator());
                 }
+                writer.write(str.toString());
                 break;
             case "loadP":
                 Elements P = doc.select("p");
                 for(Element p :P){
-                    System.out.println(p.text());
+                    str.append(p.text());
+                    str.append(System.lineSeparator());
                 }
+                writer.write(str.toString());
                 break;
             default:
                 break;
         }
+        writer.close();
 
 
     }
